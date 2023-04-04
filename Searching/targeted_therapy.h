@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 typedef std::vector<uint8_t> tt_board;
 
@@ -21,6 +22,7 @@ public:
     bool destroyCell(int idx);
     bool isGameOver() const;
 
+    std::string toString();
     void printBoard();
 
 private:
@@ -45,6 +47,9 @@ private:
     TargetedTherapy frontier, solution;
     int depth, maxDepth;
     double searchTime;
+    std::unordered_map<std::string, int> visited;
+
+    bool dfs(TargetedTherapy& frontier, int depth);
 };
 
 class AStar {};

@@ -32,6 +32,15 @@ int TargetedTherapy::getNumMoves() const {
     return numMoves;
 }
 
+std::string TargetedTherapy::toString() {
+    std::string board = "";
+    for (auto it : cells) {
+        board += std::to_string(it);
+    }
+
+    return board;
+}
+
 std::string TargetedTherapy::getBoard() const {
     std::string board = "";
     for (auto it : cells) {
