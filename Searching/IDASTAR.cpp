@@ -1,8 +1,11 @@
-#include "targeted_therapy.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
-#include <unordered_map>
 #include <algorithm>
+#include <unordered_map>
+
+#include "targeted_therapy.h"
 
 /* Constructor */
 IDA::IDA(TargetedTherapy& frontier, int maxDepth) : frontier(frontier), maxDepth(maxDepth), searchTime(-1.0) {}
@@ -101,4 +104,46 @@ int IDA::heuristic(TargetedTherapy& frontier) {
     }
 
     return frontier.getNumMoves() + h;
+}
+
+int main() {
+    // Read the input file.
+    std::ifstream infile("input.txt");
+
+    if ( !infile.is_open() ) {
+        std::cout << "Error: Cannot open the input file." << std::endl;
+        return 1;
+    }
+
+    std::string input;
+
+    getline(infile, input);
+    input.erase(remove(input.begin(), input.end(), ' '), input.end());
+
+    infile.close();
+
+    // Run IDA.
+    TargetedTherapy t(input);
+    IDA ida(t, t.getNumCells() * 3);
+    bool found = ida.search(t.getNumCells() * 3);
+
+    // Write the output file.
+    std::ofstream outfile("output.txt");
+
+    if ( !outfile.is_open() ) {
+        std::cout << "Error: Cannot open the output file." << std::endl;
+        return 1;
+    }
+
+    outfile << "Total run time = " << ida.getSearchTime() << " seconds." << std::endl;
+    
+    if (found) {
+        TargetedTherapy solution = ida.getSolution();
+        outfile << "An optimal solutioan has " << solution.getNumMoves() << " moves:" << std::endl;
+        outfile << solution.getStepRecord() << std::endl;
+    } else {
+        outfile << "There is no solution." << std::endl;
+    }
+
+    return 0;
 }

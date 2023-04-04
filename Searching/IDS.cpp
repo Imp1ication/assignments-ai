@@ -1,7 +1,11 @@
-#include "targeted_therapy.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
+#include <algorithm>
 #include <unordered_map>
+
+#include "targeted_therapy.h"
 
 /* Constructor */
 IDS::IDS(TargetedTherapy& frontier, int maxDepth) : frontier(frontier), maxDepth(maxDepth), searchTime(-1.0) {}
@@ -72,4 +76,46 @@ bool IDS::dfs(TargetedTherapy& frontier, int depth) {
     }
 
     return false;
+}
+
+int main() {
+    // Read the input file.
+    std::ifstream infile("input.txt");
+
+    if ( !infile.is_open() ) {
+        std::cout << "Error: Cannot open the input file." << std::endl;
+        return 1;
+    }
+
+    std::string input;
+
+    getline(infile, input);
+    input.erase(remove(input.begin(), input.end(), ' '), input.end());
+
+    infile.close();
+
+    // Run IDS.
+    TargetedTherapy t(input);
+    IDS ids(t, t.getNumCells() * 3);
+    bool found = ids.search();
+
+    // Write the output file.
+    std::ofstream outfile("output.txt");
+
+    if ( !outfile.is_open() ) {
+        std::cout << "Error: Cannot open the output file." << std::endl;
+        return 1;
+    }
+
+    outfile << "Total run time = " << ids.getSearchTime() << " seconds." << std::endl;
+    
+    if (found) {
+        TargetedTherapy solution = ids.getSolution();
+        outfile << "An optimal solutioan has " << solution.getNumMoves() << " moves:" << std::endl;
+        outfile << solution.getStepRecord() << std::endl;
+    } else {
+        outfile << "There is no solution." << std::endl;
+    }
+
+    return 0;
 }

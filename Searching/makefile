@@ -1,22 +1,22 @@
 # Makefile
 CC = g++
 CFLAGS = -std=c++11 -Wall -pedantic
-OBJECTS = main.o targeted_therapy.o ids.o ida.o
 
-TargetedTherapy : $(OBJECTS)
-	$(CC) $(CFLAGS) -o TargetedTherapy $(OBJECTS)
+SRCS = targeted_therapy.cpp IDS.cpp IDASTAR.cpp
+OBJS = $(SRCS:.cpp=.o)
+TARGETS = IDS IDASTAR
 
-main.o : main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+all: $(TARGETS)
 
-targeted_therapy.o : targeted_therapy.cpp targeted_therapy.h
-	$(CC) $(CFLAGS) -c targeted_therapy.cpp
+IDS: IDS.o targeted_therapy.o
+	$(CC) $(CFLAGS) $^ -o $@
 
-ids.o : ids.cpp targeted_therapy.h
-	$(CC) $(CFLAGS) -c ids.cpp
+IDASTAR: IDASTAR.o targeted_therapy.o 
+	$(CC) $(CFLAGS) $^ -o $@
 
-ida.o : ida.cpp targeted_therapy.h
-	$(CC) $(CFLAGS) -c ida.cpp
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean :
-	rm -f $(OBJECTS) TargetedTherapy
+clean:
+	rm -f $(OBJS) $(TARGETS)
+	

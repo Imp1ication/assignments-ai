@@ -1,0 +1,3 @@
+Total run time = 0.000303 seconds.
+An optimal solutioan has 4 moves:
+2 3 3 2 
