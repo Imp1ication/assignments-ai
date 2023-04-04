@@ -38,7 +38,6 @@ public:
     IDS(TargetedTherapy& frontier, int maxDepth); // if maxDepth < 0, then search until solution is found
 
     TargetedTherapy getSolution() const; // Returns empty TargetedTherapy if search is not performed
-    int getDepth() const; // Returns -1 if search is not performed
     double getSearchTime() const; // Returns -1 if search is not performed
 
     bool search(); // Returns true if solution is found
@@ -52,4 +51,22 @@ private:
     bool dfs(TargetedTherapy& frontier, int depth);
 };
 
-class AStar {};
+class IDA {
+public:
+    IDA(TargetedTherapy& frontier, int maxDepth); // if maxDepth < 0, then search until solution is found
+
+    TargetedTherapy getSolution() const; // Returns empty TargetedTherapy if search is not performed
+    double getSearchTime() const; // Returns -1 if search is not performed
+
+    bool search(int limit); // Returns true if solution is found
+
+private:
+    TargetedTherapy frontier, solution;
+    int maxDepth;
+    double searchTime;
+    std::unordered_map<std::string, int> visited;
+
+    bool dfs(TargetedTherapy& frontier, int depth, int limit);
+    int heuristic(TargetedTherapy& frontier);
+};
+
