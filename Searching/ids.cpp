@@ -4,12 +4,10 @@
 #include <unordered_map>
 
 /* Constructor */
-IDS::IDS(TargetedTherapy& frontier, int maxDepth) : frontier(frontier), depth(-1), maxDepth(maxDepth), searchTime(-1.0) {}
+IDS::IDS(TargetedTherapy& frontier, int maxDepth) : frontier(frontier), maxDepth(maxDepth), searchTime(-1.0) {}
 
 /* Getters and Setters */ 
 TargetedTherapy IDS::getSolution() const { return solution; }
-
-int IDS::getDepth() const { return depth; }
 
 double IDS::getSearchTime() const { return searchTime; }
 
@@ -27,7 +25,6 @@ bool IDS::search() {
 
         if ( dfs(frontier, i) ) {
             found = true;
-            depth = i;
             break;
         }
     }

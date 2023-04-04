@@ -45,7 +45,7 @@ public:
 
 private:
     TargetedTherapy frontier, solution;
-    int depth, maxDepth;
+    int maxDepth;
     double searchTime;
     std::unordered_map<std::string, int> visited;
 
