@@ -24,6 +24,8 @@ bool IDS::search() {
     // search
     bool found = false;
     for (int i = 0; i < maxDepth; i++) {
+        std::cout << "Depth: " << i << std::endl;
+
         // clear visited 
         visited.clear();
 
@@ -64,7 +66,7 @@ bool IDS::dfs(TargetedTherapy& frontier, int depth) {
         return false;
     }
 
-    // if frontier is not solution
+    // if frontier is not solution, then expand frontier and search each child
     for (int i = 0; i < frontier.getNumCells(); ++i) {
         TargetedTherapy child = frontier;
 
@@ -96,7 +98,7 @@ int main() {
 
     // Run IDS.
     TargetedTherapy t(input);
-    IDS ids(t, t.getNumCells() * 3);
+    IDS ids(t, t.getNumCells() * 2);
     bool found = ids.search();
 
     // Write the output file.
@@ -116,6 +118,8 @@ int main() {
     } else {
         outfile << "There is no solution." << std::endl;
     }
+
+    std::cout << "Search Done." << std::endl;
 
     return 0;
 }

@@ -23,6 +23,8 @@ bool IDA::search(int limit) {
     // search
     bool found = false;
     for (int i = 0; i < maxDepth; i++) {
+        std::cout << "Depth: " << i << std::endl;
+
         // clear visited 
         visited.clear();
 
@@ -124,8 +126,8 @@ int main() {
 
     // Run IDA.
     TargetedTherapy t(input);
-    IDA ida(t, t.getNumCells() * 3);
-    bool found = ida.search(t.getNumCells() * 3);
+    IDA ida(t, t.getNumCells() * 2);
+    bool found = ida.search(t.getNumCells() * 2);
 
     // Write the output file.
     std::ofstream outfile("output.txt");
@@ -142,8 +144,10 @@ int main() {
         outfile << "An optimal solutioan has " << solution.getNumMoves() << " moves:" << std::endl;
         outfile << solution.getStepRecord() << std::endl;
     } else {
-        outfile << "There is no solution." << std::endl;
+        outfile << "There is no solution in depth " << t.getNumCells() * 2 << "." << std::endl;
     }
+
+    std::cout << "Search Done." << std::endl;
 
     return 0;
 }

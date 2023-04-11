@@ -1,0 +1,13 @@
+0 1 0 0 1 1 0 1 1 0 0 1 0 0
+
+IDS:
+
+Total run time = 53.5638 seconds.
+An optimal solutioan has 18 moves:
+9 6 5 4 3 2 2 3 4 5 6 7 8 9 10 11 12 13 
+
+IDASTAR:
+
+Total run time = 832.692 seconds.
+An optimal solutioan has 18 moves:
+9 6 5 4 3 2 2 3 4 5 6 7 8 9 10 11 12 13 
