@@ -5,6 +5,10 @@
 using std::string;
 using std::bitset;
 
+/* Static member variables */
+bitset<MAX_BOARD_SIZE> RCGame::*rowMask_ = nullptr;
+bitset<MAX_BOARD_SIZE> RCGame::*columnMask_ = nullptr;
+
 /* Constructor */
 RCGame::RCGame(string inputFileName) {
     std::ifstream fin(inputFileName);
@@ -24,8 +28,13 @@ RCGame::RCGame(string inputFileName) {
     }
 
     // Initialize rowMask_ and columnMask_
-    rowMask_ = new bitset<MAX_BOARD_SIZE>[row_];
-    columnMask_ = new bitset<MAX_BOARD_SIZE>[column_];
+    if(rowMask_ == nullptr){
+        rowMask_ = new bitset<MAX_BOARD_SIZE>[row_];
+    }
+
+    if(columnMask_ == nullptr){
+        columnMask_ = new bitset<MAX_BOARD_SIZE>[column_];
+    }
 
     for (int i = 0; i < row_; ++i) {
         for (int j = 0; j < column_; ++j) {
@@ -35,12 +44,6 @@ RCGame::RCGame(string inputFileName) {
     }
 
     fin.close();
-}
-
-/* Destructor */ 
-RCGame::~RCGame() {
-    delete[] rowMask_;
-    delete[] columnMask_;
 }
 
 /* Public member functions */
@@ -105,7 +108,6 @@ int RCGame::clearRow(int row) {
     }
 
     int count = countRow(row);
-    rowClear_.push_back(row);
     board_ &= ~rowMask_[row];
 
     return count;
@@ -121,7 +123,6 @@ int RCGame::clearColumn(int column) {
     }
 
     int count = countColumn(column);
-    columnClear_.push_back(column);
     board_ &= ~columnMask_[column];
 
     return count;

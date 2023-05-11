@@ -1,15 +1,17 @@
 #pragma once
 
-#include <bitset>
+#include <cstdint>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
-const int MAX_ROW = 8;
-const int MAX_COLUMN = 8;
-const int MAX_BOARD_SIZE = MAX_ROW * MAX_COLUMN;
+typedef std::unordered_map<uint8_t, uint8_t> Line;
+
+const int MAX_WIDTH = 8, MAX_HEIGHT = 8;
+const int MAX_BOARD_SIZE = MAX_WIDTH * MAX_HEIGHT;
+
 
 class RCGame {
-public:
+public: 
     RCGame(std::string inputFileName);
     ~RCGame();
 
@@ -18,23 +20,19 @@ public:
 
     bool isRowEmpty(int row) const;
     bool isColumnEmpty(int column) const;
-    bool isBoardEmpty() const;
+    bool isGameOver() const;
 
     int countRow(int row) const;
     int countColumn(int column) const;
 
     int clearRow(int row);
     int clearColumn(int column);
-    
+
     void printBoard() const;
 
 private:
-    static std::bitset<MAX_BOARD_SIZE> *rowMask_, *columnMask_;
-
     int row_, column_;
     int playerScore_, aiScore_;
+    Line rowLine_, columnLine_; 
 
-    std::bitset<MAX_BOARD_SIZE> board_;
-
-    bool isValidPos(int row, int column) const;
 };
