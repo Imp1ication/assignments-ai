@@ -1,8 +1,10 @@
 #include "rc_game.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <iterator>
 #include <limits>
+#include <iomanip>
 
 using std::string;
 using std::bitset;
@@ -179,11 +181,41 @@ int RCGame::clearLine(RCMove move) {
 }
 
 void RCGame::printBoard() const {
-    for (int i = 0; i < row_; ++i) {
-        for (int j = 0; j < column_; ++j) {
-            cout << board_[i * column_ + j] << " ";
+/*
+      A   B   C   D
+    +---+---+---+---+
+  1 | O |   |   | O |
+    +---+---+---+---+
+  2 |   |   |   | O |
+    +---+---+---+---+
+  3 | O | O | O | O |
+    +---+---+---+---+
+*/
+    auto print_separatorLine = [this]() {
+        cout << std::setw(4) << "+";
+        for (int i = 0; i < column_; ++i) {
+            cout << "---+";
         }
         cout << endl;
+    };
+
+    // Print column header
+    cout << std::setw(2) << " ";
+    for (int i = 0; i < column_; ++i) {
+        cout << std::setw(4) << (char)('A' + i);
+    }
+    cout << endl;
+
+    print_separatorLine();
+
+    // Print board 
+    for (int i = 0; i < row_; ++i) {
+        cout << std::setw(2) << i + 1 << " |";
+        for (int j = 0; j < column_; ++j) {
+            cout << " " << (board_[i * column_ + j] ? "O" : " ") << " |";
+        }
+        cout << endl;
+        print_separatorLine();
     }
 }
 
@@ -203,7 +235,7 @@ void RCGame::switchPlayer() {
 }
 
 /* Minimax optimization */
-std::pair<RCMove, int> minimax(RCGame game,int depth, int alpha, int beta, int maximizingPlayer) {
+std::pair<RCMove, int> RCGame::minimax(RCGame game,int depth, int alpha, int beta, int maximizingPlayer) {
     // std::cout << "depth: " << depth << std::endl;
     // game.printBoard();
     // std::cout << std::endl;

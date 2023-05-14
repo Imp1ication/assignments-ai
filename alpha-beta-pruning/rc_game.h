@@ -31,6 +31,9 @@ public:
     int countLine(RCMove move) const;
     int clearLine(RCMove move);
 
+    // return <move, score>
+    static std::pair<RCMove, int> minimax(RCGame game,int depth, int alpha, int beta, int maximizingPlayer); 
+
     void printBoard() const;
 
 private:
@@ -47,12 +50,23 @@ private:
     void switchPlayer();
 };
 
-// return <move, score>
-std::pair<RCMove, int> minimax(RCGame game,int depth, int alpha, int beta, int maximizingPlayer); 
+class RCGameManager {
+public:
+    void printTitle();
+    bool run();
 
-//TODO:
-// 1. Line 204 and 213: fix validMoves problem (V)
-// 2. Fix bug when draw ()
+    void pressAnyKeyToContinue();
     
+private:
+    std::string highlightSelection(std::string text, int width);
+    void printMenu(std::string title, std::vector<std::string> menu, size_t choice);
+    void startGame();
+    void pvpGame();
+    void pvcGame(bool isPlayerFirst);
+    void startRandomGame();
+    void testAlphaBetaPruning();
+    void quitGame();
+    
+};
 
 
