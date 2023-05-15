@@ -195,7 +195,7 @@ void RCGameManager::pvpGame() {
 
         // handle user input 
         switch (in) {
-            case 's': system("clear"); return;    
+            case 's': system("clear"); cin.ignore(); return;    
             case 'r':{
                 game = RCGame("input.txt");
                 systemMessage.clear();
@@ -385,7 +385,7 @@ void RCGameManager::pvcGame(bool isPlayerFirst) {
         cout << ">> ";
         // handle user input 
         switch (in) {
-            case 's': system("clear"); return;    
+            case 's': system("clear"); cin.ignore();  return;    
             case 'r':{
                 game = RCGame("input.txt");
                 systemMessage.clear();

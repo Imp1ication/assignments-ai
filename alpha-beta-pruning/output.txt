@@ -1,3 +1,3 @@
-Row # : 3
-+0 points
-Total run time = 0.000363 seconds.
+Column # : 2
++4 points
+Total run time = 3.55381 seconds.
